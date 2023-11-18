@@ -1,0 +1,51 @@
+11. Write a program by using assembly language for testing the value “is the value in range?”
+and run this program in the emulator.
+
+.MODEL SMALL
+.STACK 100H
+.DATA
+MSG1 DB 'ENTER AN INPUT: $'
+MSG2 DB ' IN RANGE $'
+MSG3 DB ' OUT OF RANGE $ '
+.CODE
+MAIN PROC
+ MOV AX,@DATA
+ MOV DS, AX 
+ 
+ LEA DX, MSG1
+ MOV AH, 9
+ INT 21H
+ MOV AH, 1
+ INT 21H
+ MOV BL, AL
+ SUB BL, 48 ;SHOWING THE OUTPUT VALUE IN DECIMAL
+ 
+ CMP BL, 4
+ JGE L2 ;Jump If Greater Than Or Equal
+ 
+ L1:
+ 
+ LEA DX, MSG3
+ MOV AH, 9
+ INT 21H
+ 
+ JMP EXIT
+ 
+ L2:
+ 
+ CMP BL, 7
+ JNG L3 ;Jump If Not Greater Than
+ JMP L1
+ 
+ L3:
+ 
+ LEA DX,MSG2
+ MOV AH,9
+ INT 21H
+ 
+ EXIT:
+ 
+ MOV AH,4CH
+ INT 21H
+ MAIN ENDP
+END MAIN
